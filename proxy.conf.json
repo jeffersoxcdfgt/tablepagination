@@ -1,8 +1,10 @@
 {
-    "item/items":{
+    "/item/*":{
         "target":"https://secure.ultracart.com/rest/v2",
         "secure":false,
         "changeOrigin":true,
         "logLevel":"debug"
     }
 }
+
+/* "target":"https://secure.ultracart.com/rest/v2",*/
