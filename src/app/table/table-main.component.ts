@@ -7,7 +7,7 @@ import { State } from './store/reducers/items.reducer'
 const setresult = {
   metadata:{ 
     _limit : 5,
-    offset : 0
+    offset : 5
   }
 }
 
