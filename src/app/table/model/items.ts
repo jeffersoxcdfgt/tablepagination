@@ -18,11 +18,21 @@ export interface Items {
         result_set: {
             count: number;
             offset: number;
-            limit:  number;
+            limit: number;
             more: boolean;
-            next_offset:  number;
-            total_records:  number;
+            next_offset: number;
+            total_records: number;
         },
         payload_name: string;
     }
 }
+
+export interface SetResults {
+    _limit: number;
+    offset: number;
+}
+
+export interface ParamsResult {
+   metadata:SetResults;
+}
+
