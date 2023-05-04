@@ -14,7 +14,7 @@ export class ItemsEffects {
       .pipe(
         map((data:Items) => ({ 
             type: ItemsActionTypes.GET_ITEMS_SUCCESS, 
-            arenas: data 
+            items: data 
         }))
       ))
     )

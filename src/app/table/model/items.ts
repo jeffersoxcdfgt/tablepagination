@@ -36,3 +36,7 @@ export interface ParamsResult {
    metadata:SetResults;
 }
 
+
+export type ItemsRender = Items | null
+
+
