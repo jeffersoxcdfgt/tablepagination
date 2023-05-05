@@ -2,6 +2,22 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="container-padding">
+				<div class="page_navigator">
+					<div class="pgui-pagination" data-total-record-count="181">
+						<ul class="pagination" *ngIf="data$ | async as offset">
+							<li *ngIf="offset.metadata.result_set.offset > 0">
+								<a aria-label="Previous" class="pgui-pagination-prev" style="margin-right: 20px;" (click)="previousPage(offsetold)">
+									<span aria-hidden="true">&laquo;</span>
+								</a>
+							</li>
+							<li>
+								<a aria-label="Next" class="pgui-pagination-next" (click)="nextPage(offset.metadata.result_set.next_offset)">
+									<span aria-hidden="true">&raquo;</span>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div><!-- </Pages> -->
 				<div class="grid grid-table js-grid">
 					<table class="table text-center table-striped fixed-header">
 						<thead class="js-column-filter-container">
@@ -36,7 +52,6 @@
 							</tr>
 						</thead>
 						<tbody class="pg-row-list">
-
 							<ng-template ngFor let-item [ngForOf]="(data$ | async)?.items" let-i="index">
 								<tr class="pg-row">
 									<td class=" pgui-cell-edit">{{ item.merchant_item_oid }}</td>
@@ -50,8 +65,8 @@
 									<td class="hidden-xs hidden-sm hidden-md pgui-cell-edit">{{ item.creation_dts }}</td>
 								</tr>
 							</ng-template>
-							<tr class="empty-grid hidden">
-								<td colspan="14">
+							<tr class="empty-grid"  *ngIf="data$ | async as noresults" >
+								<td colspan="14" *ngIf="noresults.items.length == 0">
 									<div class="alert alert-warning empty-grid">
 										There are no records to display
 									</div>
@@ -67,23 +82,7 @@
 						</tbody>
 						<tfoot></tfoot>
 					</table>
-				</div><!-- <Pages> -->
-				<div class="page_navigator">
-					<div class="pgui-pagination" data-total-record-count="181">
-						<ul class="pagination" *ngIf="data$ | async as offset">
-							<li *ngIf="offset.metadata.result_set.offset > 0">
-								<a aria-label="Previous" class="pgui-pagination-prev" style="margin-right: 20px;" (click)="previousPage(offsetold)">
-									<span aria-hidden="true">&laquo;</span>
-								</a>
-							</li>
-							<li>
-								<a aria-label="Next" class="pgui-pagination-next" (click)="nextPage(offset.metadata.result_set.next_offset, offset.metadata.result_set.total_records)">
-									<span aria-hidden="true">&raquo;</span>
-								</a>
-							</li>
-						</ul>
-					</div>
-				</div><!-- </Pages> -->
+				</div>	
 			</div>
 		</div>
 	</div>
