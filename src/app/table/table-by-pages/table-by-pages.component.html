@@ -6,46 +6,63 @@
 					<table class="table text-center table-striped fixed-header">
 						<thead class="js-column-filter-container">
 							<tr>
-								<th colspan="1" rowspan="1"><span>Last name</span></th>
+								<th colspan="1" rowspan="1">
+									<span>merchant_item_oid</span>
+								</th>
 								<th class="hidden-xs hidden-sm hidden-md" colspan="1" rowspan="1">
-									<span>Birthday</span>
+									<span>merchant_id</span>
 								</th>
 								<th class="hidden-xs" colspan="1" rowspan="1">
-									<span>Country</span>
+									<span>merchant_item_id</span>
 								</th>
 								<th class="hidden-xs hidden-sm" colspan="1" rowspan="1">
-									<span>Height</span>
+									<span>description</span>
 								</th>
 								<th class="hidden-xs hidden-sm hidden-md" colspan="1" rowspan="1">
-									<span>Weight</span>
+									<span>description_translated_text_instance_oid</span>
 								</th>
 								<th class="hidden-xs hidden-sm hidden-md" colspan="1" rowspan="1">
-									<span>College</span>
+									<span>parent_category_id</span>
 								</th>
 								<th class="hidden-xs hidden-sm" colspan="1" rowspan="1">
-									<span>NBA Debut</span>
+									<span>parent_category_path</span>
 								</th>
 								<th class="hidden-xs hidden-sm hidden-md" colspan="1" rowspan="1">
-									<span>Position</span>
+									<span>last_modified_dts</span>
 								</th>
 								<th colspan="1" rowspan="1">
-									<span>Team</span>
+									<span>creation_dts</span>
 								</th>
 							</tr>
 						</thead>
 						<tbody class="pg-row-list">
-							<tr class="pg-row">
-								<td class=" pgui-cell-edit">Kobe</td>
-								<td class=" pgui-cell-edit">Bryant</td>
-								<td class="hidden-xs hidden-sm hidden-md pgui-cell-edit">23.08.1978</td>
-								<td class="hidden-xs pgui-cell-edit"> USA</td>
-								<td class="hidden-xs hidden-sm medium-height pgui-cell-edit">198</td>
-								<td class="hidden-xs hidden-sm hidden-md pgui-cell-edit">96.2</td>
-								<td class="hidden-xs hidden-sm hidden-md pgui-cell-edit">n/a</td>
-								<td class="hidden-xs hidden-sm pgui-cell-edit">1996</td>
-								<td class="hidden-xs hidden-sm hidden-md pgui-cell-edit">Guard</td>
 
-
+							<ng-template ngFor let-item [ngForOf]="(data$ | async)?.items" let-i="index">
+								<tr class="pg-row">
+									<td class=" pgui-cell-edit">{{ item.merchant_item_oid }}</td>
+									<td class=" pgui-cell-edit">{{ item.merchant_id }}</td>
+									<td class="hidden-xs hidden-sm hidden-md pgui-cell-edit">{{ item.merchant_item_id }}</td>
+									<td class="hidden-xs pgui-cell-edit"> {{ item.description }}</td>
+									<td class="hidden-xs hidden-sm medium-height pgui-cell-edit">{{ item.description_translated_text_instance_oid }}</td>
+									<td class="hidden-xs hidden-sm hidden-md pgui-cell-edit">{{ item.parent_category_id }}</td>
+									<td class="hidden-xs hidden-sm hidden-md pgui-cell-edit">{{ item.parent_category_path }}</td>
+									<td class="hidden-xs hidden-sm pgui-cell-edit">{{ item.last_modified_dts }}</td>
+									<td class="hidden-xs hidden-sm hidden-md pgui-cell-edit">{{ item.creation_dts }}</td>
+								</tr>
+							</ng-template>
+							<tr class="empty-grid hidden">
+								<td colspan="14">
+									<div class="alert alert-warning empty-grid">
+										There are no records to display
+									</div>
+								</td>
+							</tr>
+							<tr class="empty-grid hidden">
+								<td colspan="14">
+									<div class="alert alert-warning empty-grid">
+										loading
+									</div>
+								</td>
 							</tr>
 						</tbody>
 						<tfoot></tfoot>
@@ -53,14 +70,14 @@
 				</div><!-- <Pages> -->
 				<div class="page_navigator">
 					<div class="pgui-pagination" data-total-record-count="181">
-						<ul class="pagination">
-							<li>
-								<a aria-label="Previous" class="pgui-pagination-prev" style="margin-right: 20px;">
+						<ul class="pagination" *ngIf="data$ | async as offset">
+							<li *ngIf="offset.metadata.result_set.offset > 0">
+								<a aria-label="Previous" class="pgui-pagination-prev" style="margin-right: 20px;" (click)="previousPage(offsetold)">
 									<span aria-hidden="true">&laquo;</span>
 								</a>
 							</li>
 							<li>
-								<a aria-label="Next" class="pgui-pagination-next">
+								<a aria-label="Next" class="pgui-pagination-next" (click)="nextPage(offset.metadata.result_set.next_offset, offset.metadata.result_set.total_records)">
 									<span aria-hidden="true">&raquo;</span>
 								</a>
 							</li>

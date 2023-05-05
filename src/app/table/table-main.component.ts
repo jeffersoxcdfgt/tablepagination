@@ -21,7 +21,6 @@ export class TableMainComponent implements OnInit {
   constructor(private store :Store<State>){ }
 
   ngOnInit(): void {
-   // this.store.dispatch(itemsGetAll(setresult));     
+    this.store.dispatch(itemsGetAll(setresult));     
   }
-
 }

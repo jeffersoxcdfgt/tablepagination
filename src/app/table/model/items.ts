@@ -19,7 +19,7 @@ export interface Items {
             count: number;
             offset: number;
             limit: number;
-            more: boolean;
+            more: boolean | undefined;
             next_offset: number;
             total_records: number;
         },
