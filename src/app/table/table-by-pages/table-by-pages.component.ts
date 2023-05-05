@@ -4,7 +4,7 @@ import { BehaviorSubject, mergeMap, Observable, of } from 'rxjs';
 import { ItemsRender, ParamsResult } from '../model/items';
 import { itemsGetAll } from '../store/actions/items.action';
 import { selectAllItems, State } from '../store/reducers/items.reducer';
-import { CLEAROBJ, LOADING } from '../utils/functions';
+import { CLEAROBJ, LIMITTABLE, LOADING } from '../utils/functions';
 import { debounceTime } from 'rxjs/operators';
 
 @Component({
@@ -16,7 +16,7 @@ export class TableByPagesComponent implements OnInit {
 
   data$: Observable<ItemsRender> = this.store.select(selectAllItems).pipe(CLEAROBJ);
   offsetold: number = 0;
-  limit: number = 5;
+  limit: number = LIMITTABLE;
   loading$: Observable<boolean> = of(true)
 
   constructor(private store: Store<State>) { }

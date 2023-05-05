@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { itemsGetAll } from './store/actions/items.action';
 import { State } from './store/reducers/items.reducer'
+import { LIMITTABLE } from './utils/functions';
 
 const setresult = {
   metadata:{ 
-    _limit : 5,
+    _limit : LIMITTABLE,
     offset : 0
   }
 }
