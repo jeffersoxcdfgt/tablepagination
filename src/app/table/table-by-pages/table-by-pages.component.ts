@@ -29,9 +29,10 @@ export class TableByPagesComponent extends UnsubscribeComponent implements OnIni
     this.loading$ = this.store.select(selectAllItems).pipe(debounceTime(200), LOADING);
 
     this.route.queryParams.pipe(CLEANPARAMS,takeUntil(this.destroyed$)).subscribe((page:number) => {
-      const pagecurr = (page ) * 5
+      const pagecurr = (page ) * LIMITTABLE 
       const pagesKitPagination = this.buildPagination(pagecurr)
       this.setPage(pagesKitPagination)
+      this.offsetold = pagecurr - this.limit;
     });
 
     /* if you want simulate delay time */

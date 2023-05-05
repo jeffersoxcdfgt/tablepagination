@@ -25,7 +25,7 @@ export class ItemsService {
     .set('x-ultracart-api-version', environment.xultracartapiversion);
 
     const paramsstr = this.parseElements(params.metadata)
-    return this.http.get<Items>(`${this.URL}/api/items${paramsstr}`,{headers} ).pipe(
+    return this.http.get<Items>(`${this.URL}/item/items${paramsstr}`,{headers} ).pipe(
         catchError(this.traceService.handleError<Items>('findAll'))
     );
   }
