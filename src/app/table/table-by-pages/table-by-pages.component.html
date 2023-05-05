@@ -72,7 +72,7 @@
 									</div>
 								</td>
 							</tr>
-							<tr class="empty-grid hidden">
+							<tr class="empty-grid" *ngIf="(loading$ | async) === true">
 								<td colspan="14">
 									<div class="alert alert-warning empty-grid">
 										loading
