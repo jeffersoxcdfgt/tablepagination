@@ -1,28 +1,38 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, mergeMap, Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ItemsRender, ParamsResult } from '../model/items';
 import { itemsGetAll } from '../store/actions/items.action';
 import { selectAllItems, State } from '../store/reducers/items.reducer';
-import { CLEAROBJ, LIMITTABLE, LOADING } from '../utils/functions';
-import { debounceTime } from 'rxjs/operators';
+import { CLEANPARAMS, CLEAROBJ, LIMITTABLE, LOADING } from '../utils/functions';
+import { debounceTime, takeUntil } from 'rxjs/operators';
+import { ActivatedRoute, Params } from '@angular/router';
+import { UnsubscribeComponent } from 'src/app/utils/unsubscribe.component';
 
 @Component({
   selector: 'app-table-by-pages',
   templateUrl: './table-by-pages.component.html',
   styleUrls: ['./table-by-pages.component.scss']
 })
-export class TableByPagesComponent implements OnInit {
+export class TableByPagesComponent extends UnsubscribeComponent implements OnInit {
 
   data$: Observable<ItemsRender> = this.store.select(selectAllItems).pipe(CLEAROBJ);
   offsetold: number = 0;
   limit: number = LIMITTABLE;
   loading$: Observable<boolean> = of(true)
 
-  constructor(private store: Store<State>) { }
+  constructor(private store: Store<State>,private route: ActivatedRoute ) {
+    super();
+   }
 
   ngOnInit(): void {
     this.loading$ = this.store.select(selectAllItems).pipe(debounceTime(200), LOADING);
+
+    this.route.queryParams.pipe(CLEANPARAMS,takeUntil(this.destroyed$)).subscribe((page:number) => {
+      const pagecurr = (page ) * 5
+      const pagesKitPagination = this.buildPagination(pagecurr)
+      this.setPage(pagesKitPagination)
+    });
 
     /* if you want simulate delay time */
     /*setTimeout(()=>{
@@ -33,13 +43,17 @@ export class TableByPagesComponent implements OnInit {
   nextPage(next_offset: number): void {
     const pagesKitNxt = this.buildPagination(next_offset)
     this.offsetold = next_offset - this.limit;
-    this.store.dispatch(itemsGetAll(pagesKitNxt));
+    this.setPage(pagesKitNxt)
   }
 
   previousPage(offsetold: number): void {
     const pagesKitPrv = this.buildPagination(offsetold)
-    this.store.dispatch(itemsGetAll(pagesKitPrv));
+    this.setPage(pagesKitPrv)
     this.offsetold = offsetold - this.limit;
+  }
+
+  setPage(pagesKit:ParamsResult):void{
+    this.store.dispatch(itemsGetAll(pagesKit));
   }
 
   buildPagination(page: number): ParamsResult {
