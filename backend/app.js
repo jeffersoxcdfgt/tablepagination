@@ -14,7 +14,7 @@ app.use(cors());
 
 
 
-app.get('/api/items', (req, res, next)  => { 
+app.get('/item/items', (req, res, next)  => { 
   const config = {
     headers:{
       "x-ultracart-simple-key": req.header("x-ultracart-simple-key"),
