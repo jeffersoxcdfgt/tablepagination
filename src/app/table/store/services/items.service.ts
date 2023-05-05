@@ -24,9 +24,17 @@ export class ItemsService {
     .set('x-ultracart-simple-key', environment.xultracartsimplekey)
     .set('x-ultracart-api-version', environment.xultracartapiversion);
 
-
-    return this.http.get<Items>(`${this.URL}/api/items?_limit=${params.metadata._limit}&offset=${params.metadata.offset}`,{headers} ).pipe(
+    const paramsstr = this.parseElements(params.metadata)
+    return this.http.get<Items>(`${this.URL}/api/items${paramsstr}`,{headers} ).pipe(
         catchError(this.traceService.handleError<Items>('findAll'))
     );
+  }
+
+  parseElements(parseToObject:any):string{
+   const eqsign = '='
+   const ampsign = '&'  
+   const parseObject = Object.keys(parseToObject).map((k) => [ k ,JSON.stringify(parseToObject[k]) ])
+   const params = '?'+parseObject.map((params) => params.join(eqsign)).join(ampsign)
+   return params;
   }
 }

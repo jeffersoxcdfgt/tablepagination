@@ -3,7 +3,7 @@ import { filter, find , map, mergeMap} from "rxjs/operators";
 import { of } from "rxjs";
 import { Params } from "@angular/router";
 
- const ONLYNUMBERS =  filter((val:number) => val.toString().match(/^[0-9]+$/) !==null)
+ const ONLYNUMBERS =  filter((val:number) => val?.toString()?.match(/^[0-9]+$/) !==null)
  const CLEANOBJECT =  filter((val:Items) => !!val)
  const CLEANNUMBER =  filter((val:number) => !!val)
  const MAPOBJECT =  map((val) => val as Items)
