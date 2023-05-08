@@ -72,13 +72,6 @@
 									</div>
 								</td>
 							</tr>
-							<tr class="empty-grid" *ngIf="(loading$ | async) === true">
-								<td colspan="14">
-									<div class="alert alert-warning empty-grid">
-										loading
-									</div>
-								</td>
-							</tr>
 						</tbody>
 						<tfoot></tfoot>
 					</table>
@@ -87,3 +80,4 @@
 		</div>
 	</div>
 </div>
+<app-loading [loading]="loading$ | async"></app-loading>

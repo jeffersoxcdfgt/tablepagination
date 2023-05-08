@@ -26,7 +26,7 @@ export class TableByPagesComponent extends UnsubscribeComponent implements OnIni
    }
 
   ngOnInit(): void {
-    this.loading$ = this.store.select(selectAllItems).pipe(debounceTime(200), LOADING);
+   // this.loading$ = this.store.select(selectAllItems).pipe(debounceTime(200), LOADING);
 
     this.route.queryParams.pipe(CLEANPARAMS,takeUntil(this.destroyed$)).subscribe((page:number) => {
       const pagecurr = (page ) * LIMITTABLE 
@@ -36,9 +36,9 @@ export class TableByPagesComponent extends UnsubscribeComponent implements OnIni
     });
 
     /* if you want simulate delay time */
-    /*setTimeout(()=>{
+    setTimeout(()=>{
       this.loading$ = this.store.select(selectAllItems).pipe(debounceTime(200), LOADING);
-    },5000)*/
+    },5000)
   }
 
   nextPage(next_offset: number): void {

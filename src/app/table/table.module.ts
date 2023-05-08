@@ -9,6 +9,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { ItemsEffects } from './store/effects/items.effect';
 import { TraceService } from '../utils/traceService';
 import { ItemsService } from './store/services/items.service';
+import { LoadingComponent } from '../loading/loading.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { ItemsService } from './store/services/items.service';
   ],
   declarations: [
     tablemainRoutedComponents,
+    LoadingComponent,
   ],
   providers: [
     TraceService,
